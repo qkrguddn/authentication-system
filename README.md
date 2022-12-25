@@ -87,7 +87,6 @@ public MimeMessage createEmailForm(String email) throws MessagingException, Unsu
     createCode();
     String encodingPw = passwordEncoder.encode(authNum);
     user.updatePw(encodingPw);
-    userRepository.save(user);
     MimeMessage message = emailSender.createMimeMessage();
     message.addRecipients(MimeMessage.RecipientType.TO, email);
     message.setSubject("인증번호");
