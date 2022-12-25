@@ -108,3 +108,4 @@ public String sendEmail(String toEmail) throws MessagingException, UnsupportedEn
 
 ## 현재 오류 해결하고 있는 부분
 유저 정보 관련해서 포스트맨에는 api가 잘나오지만 브라우저 실행 시 오류가 발생
+- 설정 문제로 예상하나, 정확한 원인을 파악하지 못하여 강구 중
