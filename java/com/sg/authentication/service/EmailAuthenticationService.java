@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import javax.mail.MessagingException;
@@ -14,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EmailAuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
@@ -43,13 +46,13 @@ public class EmailAuthenticationService {
         authNum = key.toString();
     }
     //메일 양식 작성
+
     public MimeMessage createEmailForm(String email) throws MessagingException, UnsupportedEncodingException {
         User user = userRepository.findByEmail(email);
 
         createCode();
         String encodingPw = passwordEncoder.encode(authNum);
         user.updatePw(encodingPw);
-        userRepository.save(user);
         MimeMessage message = emailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, email); //보낼 이메일 설정
         message.setSubject("인증번호");
