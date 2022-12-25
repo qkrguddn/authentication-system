@@ -68,7 +68,7 @@ public String createToken(Authentication authentication) {
 
     return Jwts.builder()
             .setSubject(authentication.getName())
-            .claim(AUTHORITIES_KEY, authorities)//jwt body에 key, value 형식으로 넣는 것
+            .claim(AUTHORITIES_KEY, authorities)
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();
@@ -89,7 +89,7 @@ public MimeMessage createEmailForm(String email) throws MessagingException, Unsu
     user.updatePw(encodingPw);
     userRepository.save(user);
     MimeMessage message = emailSender.createMimeMessage();
-    message.addRecipients(MimeMessage.RecipientType.TO, email); //보낼 이메일 설정
+    message.addRecipients(MimeMessage.RecipientType.TO, email);
     message.setSubject("인증번호");
     message.setFrom("qkrdn2023@naver.com");
     message.setText((authNum), "utf-8", "html");
@@ -102,7 +102,10 @@ public MimeMessage createEmailForm(String email) throws MessagingException, Unsu
 public String sendEmail(String toEmail) throws MessagingException, UnsupportedEncodingException {
     MimeMessage emailForm = createEmailForm(toEmail);
     emailSender.send(emailForm);
-    return authNum; //인증 코드 반환
+    return authNum;
     }
 }
 ```
+
+## 현재 오류 해결하고 있는 부분
+유저 정보 관련해서 포스트맨에는 api가 잘나오지만 브라우저 실행 시 오류가 발생
