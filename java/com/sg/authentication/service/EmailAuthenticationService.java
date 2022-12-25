@@ -66,6 +66,4 @@ public class EmailAuthenticationService {
         emailSender.send(emailForm);
         return authNum; //인증 코드 반환
     }
-
-
 }

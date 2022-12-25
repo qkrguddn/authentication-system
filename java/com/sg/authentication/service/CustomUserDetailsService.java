@@ -23,12 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String username) {
-         Optional<User> s = userRepository.findOneAuthoritiesByUsername(username);
-         if(s == null)
-             System.out.println("널널");
-         else
-             System.out.println(s);
-        return s
+        return  userRepository.findOneAuthoritiesByUsername(username)
                 .map(user -> createUser(username, user))
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
